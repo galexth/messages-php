@@ -1,0 +1,393 @@
+openapi: 3.0.1
+info:
+  title: Messages test app
+  description: Messages test app
+  contact:
+    email: alexander.g.gorlov@gmail.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:8000/api
+tags:
+  - name: phone
+    description: Phones
+  - name: sms
+    description: Sms sources
+  - name: email
+    description: Emails
+  - name: message
+    description: Messages
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+paths:
+  /phones:
+    get:
+      tags:
+        - phone
+      summary: Get all resources
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './components/phone.yaml'
+    post:
+      tags:
+        - phone
+      summary: Add a new resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                phone:
+                  type: string
+                  example: "+71231232333"
+              required: phone
+      responses:
+        201:
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: './components/phone.yaml'
+        422:
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+  /phones/{id}:
+    put:
+      tags:
+        - phone
+      summary: Update an existing resource
+      parameters:
+        - name: id
+          in: path
+          description: ID of a resource to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                phone:
+                  type: string
+                  example: "+71231232333"
+              required: phone
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './components/phone.yaml'
+        404:
+          description: Resource not found
+          content: { }
+        422:
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+    delete:
+      tags:
+        - phone
+      summary: Delete an existing resource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceDeleted'
+        404:
+          description: Resource not found
+          content: { }
+  /emails:
+    get:
+      tags:
+        - email
+      summary: Get all resources
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './components/email.yaml'
+    post:
+      tags:
+        - email
+      summary: Add a new resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailStoreRequest'
+      responses:
+        201:
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: './components/email.yaml'
+        422:
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+  /emails/{id}:
+    put:
+      tags:
+        - email
+      summary: Update an existing resource
+      parameters:
+        - name: id
+          in: path
+          description: ID of a resource to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                  example: "+71231232333"
+              required: email
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './components/email.yaml'
+        404:
+          description: Resource not found
+          content: { }
+        422:
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+    delete:
+      tags:
+        - email
+      summary: Delete an existing resource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceDeleted'
+        404:
+          description: Resource not found
+          content: { }
+  /sms:
+    get:
+      tags:
+        - sms
+      summary: Get all resources
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './components/phone.yaml'
+    post:
+      tags:
+        - sms
+      summary: Add a new resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                phone:
+                  type: string
+                  example: "+71231232333"
+              required: sms
+      responses:
+        201:
+          description: Resource created
+          content:
+            application/json:
+              schema:
+                $ref: './components/phone.yaml'
+        422:
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+  /sms/{id}:
+      put:
+        tags:
+          - sms
+        summary: Update an existing resource
+        parameters:
+          - name: id
+            in: path
+            description: ID of a resource to return
+            required: true
+            schema:
+              type: integer
+              format: int64
+        requestBody:
+          content:
+            application/json:
+              schema:
+                properties:
+                  phone:
+                    type: string
+                    example: "+71231232333"
+                required: sms
+          required: true
+        responses:
+          200:
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: './components/phone.yaml'
+          404:
+            description: Resource not found
+            content: { }
+          422:
+            description: Validation error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ValidationResponse'
+      delete:
+        tags:
+          - sms
+        summary: Delete an existing resource
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: integer
+              format: int64
+        responses:
+          200:
+            description: Validation error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ResourceDeleted'
+          404:
+            description: Resource not found
+            content: { }
+  /messages:
+    get:
+      tags:
+        - message
+      summary: Get all resources
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagesResponse'
+components:
+  schemas:
+    ValidationResponse:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string
+      example:
+        phone: ["The phone field is required."]
+    MessagesResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        page:
+          type: integer
+        per_page:
+          type: integer
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: './components/message.yaml'
+    EmailStoreRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        settings:
+          type: object
+          properties:
+            send:
+              type: object
+              properties:
+                host:
+                  type: string
+                port:
+                  type: integer
+                login:
+                  type: string
+                password:
+                  type: string
+                secure:
+                  type: boolean
+      example:
+        email: "test@google.com"
+        settings:
+            send:
+                host: "smtp.gmail.com"
+                port: "465"
+                login: "test@google.com"
+                password: "asdf234Fddx"
+                secure: true
+    ResourceDeleted:
+      type: object
+      properties:
+        deleted:
+          type: boolean
