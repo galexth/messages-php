@@ -22,4 +22,7 @@ php artisan serve
 php artisan test
 ```
 
-PS. Не стал делать репозитории)
+### Api docs
+```http request
+GET http://localhost:8000
+```
