@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('email')->unique();
-            $table->timestamp('activity')->nullable();
             $table->json('settings');
+            $table->timestamp('activity')->nullable();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

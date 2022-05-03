@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmailRequest;
 use App\Models\Email;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class EmailController extends Controller
 {
