@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Email extends Model
 {
-    use HasFactory, SoftDeletes, HasMessages;
+    use HasFactory;
+    use SoftDeletes;
+    use HasMessages;
 
     protected $table = 'emails';
 

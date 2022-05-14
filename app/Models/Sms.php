@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sms extends Model
 {
-    use HasFactory, SoftDeletes, HasMessages;
+    use HasFactory;
+    use SoftDeletes;
+    use HasMessages;
 
     protected $table = 'sms';
 
