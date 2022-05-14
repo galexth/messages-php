@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class PhoneControllerTest extends TestCase
 {
-    public function test_index()
+    public function testIndex()
     {
         $response = $this->get('/api/phones');
         $response->assertStatus(200);
@@ -16,7 +16,7 @@ class PhoneControllerTest extends TestCase
         ]);
     }
 
-    public function test_create()
+    public function testCreate()
     {
         $response = $this->post('/api/phones', ['phone' => '123123']);
         $response->assertStatus(201);
@@ -25,7 +25,7 @@ class PhoneControllerTest extends TestCase
         ]);
     }
 
-    public function test_create_invalid()
+    public function testCreateInvalid()
     {
         $response = $this->post('/api/phones', ['invalid' => '123123']);
         $response->assertStatus(422);
@@ -36,7 +36,7 @@ class PhoneControllerTest extends TestCase
         ]);
     }
 
-    public function test_update()
+    public function testUpdate()
     {
         $phone = Phone::first();
         $response = $this->put("/api/phones/{$phone->id}", ['phone' => '3333']);
@@ -47,7 +47,7 @@ class PhoneControllerTest extends TestCase
         ]);
     }
 
-    public function test_update_invalid()
+    public function testUpdateInvalid()
     {
         $phone = Phone::first();
         $response = $this->put("/api/phones/{$phone->id}", ['invalid' => '333']);
@@ -59,7 +59,7 @@ class PhoneControllerTest extends TestCase
         ]);
     }
 
-    public function test_delete()
+    public function testDelete()
     {
         $phone = Phone::first();
         $response = $this->delete("/api/phones/{$phone->id}");

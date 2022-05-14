@@ -6,7 +6,7 @@ use Tests\TestCase;
 
 class MessageControllerTest extends TestCase
 {
-    public function test_index()
+    public function testIndex()
     {
         $response = $this->get('/api/messages');
         $response->assertStatus(200);

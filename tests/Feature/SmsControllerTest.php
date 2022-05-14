@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class SmsControllerTest extends TestCase
 {
-    public function test_index()
+    public function testIndex()
     {
         $response = $this->get('/api/sms');
         $response->assertStatus(200);
@@ -16,7 +16,7 @@ class SmsControllerTest extends TestCase
         ]);
     }
 
-    public function test_create()
+    public function testCreate()
     {
         $response = $this->post('/api/sms', ['phone' => '123123']);
         $response->assertStatus(201);
@@ -25,7 +25,7 @@ class SmsControllerTest extends TestCase
         ]);
     }
 
-    public function test_create_invalid()
+    public function testCreateInvalid()
     {
         $response = $this->post('/api/sms', ['invalid' => '123123']);
         $response->assertStatus(422);
@@ -36,7 +36,7 @@ class SmsControllerTest extends TestCase
         ]);
     }
 
-    public function test_update()
+    public function testUpdate()
     {
         $sms = Sms::first();
         $response = $this->put("/api/sms/{$sms->id}", ['phone' => '3333']);
@@ -47,7 +47,7 @@ class SmsControllerTest extends TestCase
         ]);
     }
 
-    public function test_update_invalid()
+    public function testUpdateInvalid()
     {
         $sms = Sms::first();
         $response = $this->put("/api/sms/{$sms->id}", ['invalid' => '333']);
@@ -59,7 +59,7 @@ class SmsControllerTest extends TestCase
         ]);
     }
 
-    public function test_delete()
+    public function testDelete()
     {
         $sms = Sms::first();
         $response = $this->delete("/api/sms/{$sms->id}");

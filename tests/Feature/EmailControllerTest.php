@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class EmailControllerTest extends TestCase
 {
-    public function test_index()
+    public function testIndex()
     {
         $response = $this->get('/api/emails');
         $response->assertStatus(200);
@@ -16,7 +16,7 @@ class EmailControllerTest extends TestCase
         ]);
     }
 
-    public function test_create()
+    public function testCreate()
     {
         $response = $this->post('/api/emails', [
             'email' => 'test@test.ru',
@@ -45,13 +45,13 @@ class EmailControllerTest extends TestCase
         ]);
     }
 
-    public function test_create_invalid()
+    public function testCreateInvalid()
     {
         $response = $this->post('/api/emails', ['invalid' => '123123']);
         $response->assertStatus(422);
     }
 
-    public function test_update()
+    public function testUpdate()
     {
         $email = Email::first();
         $response = $this->put("/api/emails/{$email->id}", [
@@ -81,14 +81,14 @@ class EmailControllerTest extends TestCase
         ]);
     }
 
-    public function test_update_invalid()
+    public function testUpdateInvalid()
     {
         $email = Email::first();
         $response = $this->put("/api/emails/{$email->id}", ['invalid' => '333']);
         $response->assertStatus(422);
     }
 
-    public function test_delete()
+    public function testDelete()
     {
         $email = Email::first();
         $response = $this->delete("/api/emails/{$email->id}");
