@@ -1,0 +1,89 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    container_name: app
+    restart: unless-stopped
+  db:
+    #apple m1 case
+    image: mysql/mysql-server:8.0-aarch64
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker/mysql/log/:/var/log/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - ./.env
+    ports:
+      - "3307:3306"
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/nginx/log/:/var/log/nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass phP0mGun4dwwcYOFxRMH2Drdv0ylclbr
+    volumes:
+      - redisdata:/data
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
+    container_name: es
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9200
+      - 9301:9300
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.17.3
+    environment:
+      - ELASTICSEARCH_HOSTS=http://es:9200
+    ports:
+      - 5602:5601
+    depends_on:
+      - es
+volumes:
+  dbdata:
+    driver: local
+  esdata:
+    driver: local
+  redisdata:
+    driver: local
