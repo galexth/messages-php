@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->renderable(function (ValidationException $e) {
-            return response()->json($e->errors(), $e->status);
+//            return response()->json($e->errors(), $e->status);
         });
     }
 }
