@@ -2,4 +2,19 @@ grumphp:
   tasks:
     phpcs:
       standard: PSR12
-      ignore_patterns: [./resources/*, ./bootstrap/*, ./public/*]
+      ignore_patterns: [ ./resources/*, ./bootstrap/*, ./public/* ]
+    phpcpd:
+      directory: [ './app' ]
+      exclude: [ './vendor' ]
+      fuzzy: false
+      min_lines: 5
+      min_tokens: 70
+      triggered_by: [ 'php' ]
+    phpmd:
+      whitelist_patterns: [ ]
+      exclude: [ ]
+      report_format: ansi
+      ruleset: [ './ruleset.xml' ]
+      triggered_by: [ 'php' ]
+#    phpunit:
+#      always_execute: true
