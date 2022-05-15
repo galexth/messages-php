@@ -9,7 +9,7 @@ class EmailControllerTest extends TestCase
 {
     public function testIndex()
     {
-        $response = $this->get('/api/emails');
+        $response = $this->getJson('/api/emails');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => ['id', 'email', 'activity'],
@@ -18,7 +18,7 @@ class EmailControllerTest extends TestCase
 
     public function testCreate()
     {
-        $response = $this->post('/api/emails', [
+        $response = $this->postJson('/api/emails', [
             'email' => 'test@test.ru',
             'settings' => [
                 'send' => [
@@ -47,14 +47,14 @@ class EmailControllerTest extends TestCase
 
     public function testCreateInvalid()
     {
-        $response = $this->post('/api/emails', ['invalid' => '123123']);
+        $response = $this->postJson('/api/emails', ['invalid' => '123123']);
         $response->assertStatus(422);
     }
 
     public function testUpdate()
     {
         $email = Email::first();
-        $response = $this->put("/api/emails/{$email->id}", [
+        $response = $this->putJson("/api/emails/{$email->id}", [
             'email' => $email->email,
             'settings' => [
                 'send' => [
@@ -84,14 +84,14 @@ class EmailControllerTest extends TestCase
     public function testUpdateInvalid()
     {
         $email = Email::first();
-        $response = $this->put("/api/emails/{$email->id}", ['invalid' => '333']);
+        $response = $this->putJson("/api/emails/{$email->id}", ['invalid' => '333']);
         $response->assertStatus(422);
     }
 
     public function testDelete()
     {
         $email = Email::first();
-        $response = $this->delete("/api/emails/{$email->id}");
+        $response = $this->deleteJson("/api/emails/{$email->id}");
         $response->assertStatus(200);
         $response->assertJson([
             'deleted' => true

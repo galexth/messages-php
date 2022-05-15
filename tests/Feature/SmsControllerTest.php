@@ -9,7 +9,7 @@ class SmsControllerTest extends TestCase
 {
     public function testIndex()
     {
-        $response = $this->get('/api/sms');
+        $response = $this->getJson('/api/sms');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => ['id', 'phone', 'activity'],
@@ -18,7 +18,7 @@ class SmsControllerTest extends TestCase
 
     public function testCreate()
     {
-        $response = $this->post('/api/sms', ['phone' => '123123']);
+        $response = $this->postJson('/api/sms', ['phone' => '123123']);
         $response->assertStatus(201);
         $response->assertJsonFragment([
             'phone' => '123123'
@@ -27,11 +27,14 @@ class SmsControllerTest extends TestCase
 
     public function testCreateInvalid()
     {
-        $response = $this->post('/api/sms', ['invalid' => '123123']);
+        $response = $this->postJson('/api/sms', ['invalid' => '123123']);
         $response->assertStatus(422);
         $response->assertJson([
-            'phone' => [
-                'The phone field is required.'
+            "message" => "The phone field is required.",
+            'errors' => [
+                'phone' => [
+                    'The phone field is required.'
+                ]
             ]
         ]);
     }
@@ -39,7 +42,7 @@ class SmsControllerTest extends TestCase
     public function testUpdate()
     {
         $sms = Sms::first();
-        $response = $this->put("/api/sms/{$sms->id}", ['phone' => '3333']);
+        $response = $this->putJson("/api/sms/{$sms->id}", ['phone' => '3333']);
         $response->assertStatus(200);
         $response->assertJsonFragment([
             'id' => $sms->id,
@@ -50,11 +53,14 @@ class SmsControllerTest extends TestCase
     public function testUpdateInvalid()
     {
         $sms = Sms::first();
-        $response = $this->put("/api/sms/{$sms->id}", ['invalid' => '333']);
+        $response = $this->putJson("/api/sms/{$sms->id}", ['invalid' => '333']);
         $response->assertStatus(422);
         $response->assertJson([
-            'phone' => [
-                'The phone field is required.'
+            "message" => "The phone field is required.",
+            'errors' => [
+                'phone' => [
+                    'The phone field is required.'
+                ]
             ]
         ]);
     }
@@ -62,7 +68,7 @@ class SmsControllerTest extends TestCase
     public function testDelete()
     {
         $sms = Sms::first();
-        $response = $this->delete("/api/sms/{$sms->id}");
+        $response = $this->deleteJson("/api/sms/{$sms->id}");
         $response->assertStatus(200);
         $response->assertJson([
             'deleted' => true

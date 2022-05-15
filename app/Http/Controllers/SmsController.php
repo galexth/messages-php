@@ -29,9 +29,6 @@ class SmsController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
         $this->validate($request, [
             'phone' => ['required', Rule::unique('sms')],
         ]);
