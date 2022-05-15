@@ -8,7 +8,7 @@ grumphp:
       exclude: [ './vendor' ]
       fuzzy: false
       min_lines: 5
-      min_tokens: 70
+      min_tokens: 30
       triggered_by: [ 'php' ]
     phpmd:
       whitelist_patterns: [ ]
